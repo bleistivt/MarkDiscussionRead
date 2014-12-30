@@ -3,7 +3,7 @@
 $PluginInfo['MarkDiscussionRead'] = array(
     'Name' => 'MarkDiscussionRead',
     'Description' => 'Selectively mark discussions as read.',
-    'Version' => '1.0',
+    'Version' => '1.0.1',
     'MobileFriendly' => true,
     'Author' => 'Bleistivt'
 );
