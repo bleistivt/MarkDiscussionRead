@@ -1,58 +1,49 @@
-<?php if (!defined('APPLICATION')) exit();
+<?php
 
-$PluginInfo['MarkDiscussionRead'] = array(
+$PluginInfo['MarkDiscussionRead'] = [
     'Name' => 'MarkDiscussionRead',
     'Description' => 'Selectively mark discussions as read.',
     'Version' => '1.0.1',
     'MobileFriendly' => true,
     'Author' => 'Bleistivt',
     'License' => 'GNU GPL2'
-);
+];
 
 class MarkDiscussionReadPlugin extends Gdn_Plugin {
 
-    public function DiscussionController_MarkRead_Create($Sender, $Args) {
-        if (!$Sender->Request->IsAuthenticatedPostBack()) {
-            throw PermissionException('Javascript');
+    public function discussionController_markRead_create($sender, $args) {
+        if (!$sender->Request->isAuthenticatedPostBack()) {
+            throw permissionException('Javascript');
         }
 
-        $DiscussionModel = new DiscussionModel();
-        $Discussion = $DiscussionModel->GetID(val(0, $Args));
-        if (!$Discussion) {
+        $discussion = (new DiscussionModel())->getID(val(0, $args));
+        if (!$discussion) {
             throw NotFoundException('Discussion');
         }
 
-        $CountComments = $Discussion->CountComments;
-        $CommentModel = new CommentModel();
-        $CommentModel->SetWatch($Discussion, $CountComments, $CountComments, $CountComments);
+        $count = $discussion->CountComments;
+        (new CommentModel())->setWatch($discussion, $count, $count, $count);
 
-        $Sender->JsonTarget("#Discussion_{$Discussion->DiscussionID}", 'New Unread', 'RemoveClass');
-        $Sender->JsonTarget("#Discussion_{$Discussion->DiscussionID} .NewCommentCount", null, 'Remove');
-        $Sender->JsonTarget("#Discussion_{$Discussion->DiscussionID}", 'Read', 'AddClass');
+        $sender->jsonTarget("#Discussion_{$discussion->DiscussionID}", 'New Unread', 'RemoveClass');
+        $sender->jsonTarget("#Discussion_{$discussion->DiscussionID} .NewCommentCount", null, 'Remove');
+        $sender->jsonTarget("#Discussion_{$discussion->DiscussionID}", 'Read', 'AddClass');
 
-        $Discussion->CountUnreadComments = 0;
-        $Sender->SendOptions($Discussion);
+        $discussion->CountUnreadComments = 0;
+        $sender->sendOptions($discussion);
 
-        $Sender->Render('Blank', 'Utility', 'Dashboard');
+        $sender->render('Blank', 'Utility', 'Dashboard');
     }
 
-    public function Base_DiscussionOptions_Handler($Sender) {
-        if (!Gdn::Session()->IsValid() || !isset($Sender->Options)) {
+    public function discussionscontroller_discussionOptions_handler($sender, $args) {
+        if (!Gdn::session()->isValid() || !$args['Discussion']->CountUnreadComments) {
             return;
         }
 
-        $Discussion = $Sender->EventArguments['Discussion'];
-        if (!$Discussion->CountUnreadComments > 0) {
-            return;
-        }
-
-        $Option = array(
-            'Label' => T('Mark as read'),
-            'Url' => '/discussion/markread/'.$Discussion->DiscussionID,
-            'Class' => 'MarkRead Hijack'
-        );
-
-        $Sender->Options .= Wrap(Anchor($Option['Label'], $Option['Url'], $Option['Class']), 'li');
+        $sender->Options .= wrap(anchor(
+            T('Mark as read'),
+            '/discussion/markread/'.$args['Discussion']->DiscussionID,
+            'MarkRead Hijack'
+        ), 'li');
     }
 
 }
