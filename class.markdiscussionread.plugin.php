@@ -45,7 +45,7 @@ class MarkDiscussionReadPlugin extends Gdn_Plugin {
             'MarkRead Hijack'
         ), 'li');
     }
-    
+
     public function categoriesController_discussionOptions_handler($sender, $args) {
         $this->discussionsController_discussionOptions_handler($sender, $args);
     }
