@@ -31,10 +31,10 @@ class MarkDiscussionReadPlugin extends Gdn_Plugin {
         $discussion->CountUnreadComments = 0;
         $sender->sendOptions($discussion);
 
-        $sender->render('Blank', 'Utility', 'Dashboard');
+        $sender->render('blank', 'utility', 'dashboard');
     }
 
-    public function discussionscontroller_discussionOptions_handler($sender, $args) {
+    public function discussionsController_discussionOptions_handler($sender, $args) {
         if (!Gdn::session()->isValid() || !$args['Discussion']->CountUnreadComments) {
             return;
         }
@@ -44,6 +44,10 @@ class MarkDiscussionReadPlugin extends Gdn_Plugin {
             '/discussion/markread/'.$args['Discussion']->DiscussionID,
             'MarkRead Hijack'
         ), 'li');
+    }
+    
+    public function categoriesController_discussionOptions_handler($sender, $args) {
+        $this->discussionsController_discussionOptions_handler($sender, $args);
     }
 
 }
