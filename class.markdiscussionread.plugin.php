@@ -18,7 +18,7 @@ class MarkDiscussionReadPlugin extends Gdn_Plugin {
 
         $discussion = (new DiscussionModel())->getID(val(0, $args));
         if (!$discussion) {
-            throw NotFoundException('Discussion');
+            throw notFoundException('Discussion');
         }
 
         $count = $discussion->CountComments;
