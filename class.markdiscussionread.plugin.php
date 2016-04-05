@@ -3,7 +3,7 @@
 $PluginInfo['MarkDiscussionRead'] = [
     'Name' => 'MarkDiscussionRead',
     'Description' => 'Selectively mark discussions as read.',
-    'Version' => '1.0.2',
+    'Version' => '1.0.3',
     'MobileFriendly' => true,
     'Author' => 'Bleistivt',
     'License' => 'GNU GPL2'
@@ -34,16 +34,17 @@ class MarkDiscussionReadPlugin extends Gdn_Plugin {
         $sender->render('blank', 'utility', 'dashboard');
     }
 
-    public function discussionsController_discussionOptions_handler($sender, $args) {
+    public function discussionsController_discussionOptionsDropdown_handler($sender, $args) {
         if (!Gdn::session()->isValid() || !$args['Discussion']->CountUnreadComments) {
             return;
         }
 
-        $sender->Options .= wrap(anchor(
-            T('Mark as read'),
+        $args['DiscussionOptionsDropdown']->addLink(
+            t('Mark as read'),
             '/discussion/markread/'.$args['Discussion']->DiscussionID,
+            'markread',
             'MarkRead Hijack'
-        ), 'li');
+       );
     }
 
     public function categoriesController_discussionOptions_handler($sender, $args) {
