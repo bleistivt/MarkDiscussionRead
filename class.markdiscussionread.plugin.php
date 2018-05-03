@@ -1,14 +1,5 @@
 <?php
 
-$PluginInfo['MarkDiscussionRead'] = [
-    'Name' => 'MarkDiscussionRead',
-    'Description' => 'Selectively mark discussions as read.',
-    'Version' => '1.0.3',
-    'MobileFriendly' => true,
-    'Author' => 'Bleistivt',
-    'License' => 'GNU GPL2'
-];
-
 class MarkDiscussionReadPlugin extends Gdn_Plugin {
 
     public function discussionController_markRead_create($sender, $args) {
