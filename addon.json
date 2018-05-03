@@ -1,0 +1,16 @@
+{
+    "name": "MarkDiscussionRead",
+    "description": "Selectively mark discussions as read.",
+    "version": "1.0.3",
+    "mobileFriendly": true,
+    "license": "GNU GPL2",
+    "gitHub": "bleistivt/MarkDiscussionRead",
+    "key": "markdiscussionread",
+    "type": "addon",
+    "authors": [
+        {
+            "name": "Bleistivt",
+            "homepage": "http://bleistivt.net"
+        }
+    ]
+}
