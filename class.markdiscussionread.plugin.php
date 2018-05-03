@@ -38,8 +38,8 @@ class MarkDiscussionReadPlugin extends Gdn_Plugin {
        );
     }
 
-    public function categoriesController_discussionOptions_handler($sender, $args) {
-        $this->discussionsController_discussionOptions_handler($sender, $args);
+    public function categoriesController_discussionOptionsDropdown_handler($sender, $args) {
+        $this->discussionsController_discussionOptionsDropdown_handler($sender, $args);
     }
 
 }
