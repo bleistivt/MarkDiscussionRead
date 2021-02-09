@@ -31,7 +31,7 @@ class MarkDiscussionReadPlugin extends Gdn_Plugin {
         }
 
         $args['DiscussionOptionsDropdown']->addLink(
-            t('Mark as read'),
+            Gdn::translate('Mark as read'),
             '/discussion/markread/'.$args['Discussion']->DiscussionID,
             'markread',
             'MarkRead Hijack'
