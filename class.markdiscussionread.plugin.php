@@ -1,6 +1,10 @@
 <?php
 
+use Garden\StaticCacheTranslationTrait;
+
 class MarkDiscussionReadPlugin extends Gdn_Plugin {
+
+    use StaticCacheTranslationTrait;
 
     public function discussionController_markRead_create($sender, $args) {
         if (!$sender->Request->isAuthenticatedPostBack()) {
@@ -31,7 +35,7 @@ class MarkDiscussionReadPlugin extends Gdn_Plugin {
         }
 
         $args['DiscussionOptionsDropdown']->addLink(
-            Gdn::translate('Mark as read'),
+            self::t('Mark as read'),
             '/discussion/markread/'.$args['Discussion']->DiscussionID,
             'markread',
             'MarkRead Hijack'
